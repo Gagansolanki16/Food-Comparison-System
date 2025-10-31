@@ -54,6 +54,10 @@
               "target": "Package",
               "version": "[4.0.3, )"
             },
+            "HtmlAgilityPack": {
+              "target": "Package",
+              "version": "[1.12.3, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[9.0.9, )"
@@ -73,6 +77,10 @@
               "suppressParent": "All",
               "target": "Package",
               "version": "[9.0.9, )"
+            },
+            "Microsoft.Playwright": {
+              "target": "Package",
+              "version": "[1.55.0, )"
             }
           },
           "imports": [

@@ -1,27 +1,23 @@
-﻿using FoodPriceComparison.Data;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
+using FoodPriceComparison.Data; 
+using FoodPriceComparison.Services;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace FoodPriceComparison.Controllers
 {
     public class PriceCompareController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly FoodScraperService _scraper;
 
-        public PriceCompareController(ApplicationDbContext context)
+        public PriceCompareController(ApplicationDbContext context, FoodScraperService scraper)
         {
             _context = context;
+            _scraper = scraper;
         }
 
-        // GET: Search Page
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        // POST: Search Results
         [HttpPost]
         public async Task<IActionResult> Search(string query)
         {
@@ -31,36 +27,25 @@ namespace FoodPriceComparison.Controllers
                 return View("Index");
             }
 
-            var results = await _context.PlatformPrices
-                .Where(p => p.DishName.Contains(query))
-                .OrderBy(p => p.Price)
-                .ToListAsync();
+            // 🔥 Scrape online
+            var scrapedResults = await _scraper.ScrapePricesAsync(query);
 
-            if (!results.Any())
+            // Fallback to DB if scraping fails
+            if (!scrapedResults.Any())
+            {
+                scrapedResults = await _context.PlatformPrices
+                    .Where(p => p.DishName.Contains(query))
+                    .OrderBy(p => p.Price)
+                    .ToListAsync();
+            }
+
+            if (!scrapedResults.Any())
             {
                 ViewBag.Error = $"No results found for '{query}'.";
                 return View("Index");
             }
 
-            return View("Results", results);
+            return View("Results", scrapedResults);
         }
-
-        [HttpGet]
-        public JsonResult GetDishSuggestions(string term)
-        {
-            if (string.IsNullOrEmpty(term))
-                return Json(new List<string>());
-
-            var suggestions = _context.PlatformPrices
-                .Where(p => p.DishName.Contains(term))
-                .Select(p => p.DishName)
-                .Distinct()
-                .Take(5) // max 5 suggestions
-                .ToList();
-
-            return Json(suggestions);
-        }
-
-
     }
 }

@@ -12,9 +12,10 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 
 // Register service
-//builder.Services.AddScoped<IPriceFetcher>();
 builder.Services.AddSession();
 builder.Services.AddDistributedMemoryCache();
+builder.Services.AddScoped<FoodScraperService>();
+
 
 var app = builder.Build();
 

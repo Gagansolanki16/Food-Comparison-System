@@ -36,7 +36,7 @@
                         @if (platformLinks.ContainsKey(item.PlatformName))
                         {
                             <a href="@platformLinks[item.PlatformName]" target="_blank" class="btn btn-sm btn-primary">
-                                Visit Site
+                                Visit @item.PlatformName
                             </a>
                         }
                         else
@@ -44,6 +44,7 @@
                             <span class="text-muted">N/A</span>
                         }
                     </td>
+
                 </tr>
             }
         </tbody>
