@@ -32,28 +32,32 @@ build_property.EnableCodeStyleSeverity =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxMb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/sriva/source/repos/FoodPriceComparison/FoodPriceComparison/Views/Account/Signup.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxTaWdudXAuY3NodG1s
+[C:/Users/sriva/source/repos/FoodPriceComparison/FoodPriceComparison/Views/Account/Profile.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxQcm9maWxlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sriva/source/repos/FoodPriceComparison/FoodPriceComparison/Views/Account/Register.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxSZWdpc3Rlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sriva/source/repos/FoodPriceComparison/FoodPriceComparison/Views/Comparison/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tcGFyaXNvblxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sriva/source/repos/FoodPriceComparison/FoodPriceComparison/Views/Home/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxFcnJvci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/sriva/source/repos/FoodPriceComparison/FoodPriceComparison/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/sriva/source/repos/FoodPriceComparison/FoodPriceComparison/Views/Home/Privacy.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/sriva/source/repos/FoodPriceComparison/FoodPriceComparison/Views/PriceCompare/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJpY2VDb21wYXJlXEluZGV4LmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/sriva/source/repos/FoodPriceComparison/FoodPriceComparison/Views/PriceCompare/Results.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJpY2VDb21wYXJlXFJlc3VsdHMuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/sriva/source/repos/FoodPriceComparison/FoodPriceComparison/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/sriva/source/repos/FoodPriceComparison/FoodPriceComparison/Views/Shared/_LoginPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Mb2dpblBhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/sriva/source/repos/FoodPriceComparison/FoodPriceComparison/Views/Shared/_ValidationScriptsPartial.cshtml]

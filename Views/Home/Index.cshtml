@@ -1,41 +1,17 @@
 ﻿@{
-    var username = Context.Session.GetString("Username");
     ViewData["Title"] = "Home";
 }
 
-<!-- Hero Section (Banner: Updated to Orange Shades) -->
-<section class="hero-section text-white py-5" style="background: linear-gradient(135deg, #ff9500 0%, #ff6b35 100%); min-height: 60vh; display: flex; align-items: center;">
-    <div class="container text-center">
-        <h1 class="display-3 fw-bold mb-3 animate-fade-in">🍔 Welcome to FoodCompare!</h1>
-        <p class="lead fs-4 mb-4">Compare food delivery prices across Swiggy, Zomato, UberEats & more. Save big on your favorites!</p>
-
-        @if (!string.IsNullOrEmpty(username))
-        {
-            <div class="mb-4">
-                <p class="fs-5 mb-3">Hello, <b>@username</b> 👋 Ready to save money today?</p>
-                <a class="btn btn-light btn-lg px-5 py-3 shadow-lg me-3" asp-controller="PriceCompare" asp-action="Index">
-                    <i class="fas fa-search me-2"></i>Start Comparing
-                </a>
-                <a class="btn btn-outline-light btn-lg px-5 py-3 shadow-lg" asp-controller="Profile" asp-action="Index">
-                    <i class="fas fa-user me-2"></i>My Profile
-                </a>
-            </div>
-        }
-        else
-        {
-            <div class="d-flex justify-content-center gap-3 flex-wrap">
-                <a href="/Account/Login" class="btn btn-light btn-lg px-5 py-3 shadow-lg">
-                    <i class="fas fa-sign-in-alt me-2"></i>Login
-                </a>
-                <a href="/Account/Signup" class="btn btn-outline-light btn-lg px-5 py-3 shadow-lg">
-                    <i class="fas fa-user-plus me-2"></i>Signup Free
-                </a>
-            </div>
-        }
+<div class="hero">
+    <div class="container">
+        <h1 class="display-4 fw-bold">Discover the Best Food Prices!</h1>
+        <p class="lead">Compare prices across top delivery sites like Swiggy and Zomato in seconds.</p>
+        <a asp-controller="Comparison" asp-action="Index" class="btn btn-primary btn-lg mt-3">
+            <i class="bi bi-arrow-right-circle"></i> Start Comparing Now
+        </a>
     </div>
-</section>
+</div>
 
-<!-- Savings Stats Section (Unchanged) -->
 <section class="bg-light py-4">
     <div class="container">
         <div class="row text-center justify-content-center">
@@ -58,139 +34,45 @@
     </div>
 </section>
 
-<!-- Features Section (Unchanged) -->
 <section class="py-5">
     <div class="container">
         <h2 class="text-center display-5 fw-bold mb-5 text-dark">Why Choose FoodCompare?</h2>
         <div class="row row-cols-1 row-cols-md-3 g-4">
             <div class="col">
                 <div class="card h-100 shadow-lg border-0 food-card bg-gradient position-relative overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092?w=400&h=250&fit=crop" class="card-img-top" alt="Pizza Deals - Cheapest options across apps">
+                    <img src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092?w=400&h=250&fit=crop" class="card-img-top" alt="Easy Search">
                     <div class="card-body text-center p-4">
                         <i class="fas fa-pizza-slice fa-3x text-warning mb-3 position-absolute top-0 end-0 p-3 bg-white rounded-circle shadow"></i>
-                        <h5 class="card-title fw-bold">Pizza Deals</h5>
-                        <p class="card-text">Find the cheapest pizza across platforms in seconds 🍕</p>
-                        <a href="/PriceCompare?category=Pizza" class="btn btn-outline-warning btn-sm">Compare Now</a>
+                        <h5 class="card-title fw-bold">Easy Search</h5>
+                        <p class="card-text">Enter any food item and get instant comparisons</p>
+                        <a asp-controller="Comparison" asp-action="Index" asp-route-foodItem="Pizza" class="btn btn-outline-warning btn-sm">Compare Now</a>
                     </div>
                 </div>
             </div>
 
             <div class="col">
                 <div class="card h-100 shadow-lg border-0 food-card bg-gradient position-relative overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?w=400&h=250&fit=crop" class="card-img-top" alt="Burger Bonanza - Instant price checks">
+                    <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" class="card-img-top" alt="Price Insights">
                     <div class="card-body text-center p-4">
-                        <i class="fas fa-hamburger fa-3x text-danger mb-3 position-absolute top-0 start-0 p-3 bg-white rounded-circle shadow"></i>
-                        <h5 class="card-title fw-bold">Burger Bonanza</h5>
-                        <p class="card-text">Compare burger prices instantly and save 🍔</p>
-                        <a href="/PriceCompare?category=Burger" class="btn btn-outline-danger btn-sm">Compare Now</a>
+                        <i class="fas fa-wallet fa-3x text-danger mb-3 position-absolute top-0 end-0 p-3 bg-white rounded-circle shadow"></i>
+                        <h5 class="card-title fw-bold">Price Insights</h5>
+                        <p class="card-text">See the lowest prices and best deals at a glance</p>
+                        <a asp-controller="Comparison" asp-action="Index" class="btn btn-outline-danger btn-sm">Compare Now</a>
                     </div>
                 </div>
             </div>
 
             <div class="col">
                 <div class="card h-100 shadow-lg border-0 food-card bg-gradient position-relative overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1543353071-873f17a7a088?w=400&h=250&fit=crop" class="card-img-top" alt="All Foods - Save on any dish">
+                    <img src="https://tse3.mm.bing.net/th/id/OIP.mR-l-_HqES6XXBvxSk7ILQAAAA?rs=1&pid=ImgDetMain&o=7&rm=3" class="card-img-top" alt="All Foods - Save on any dish">
                     <div class="card-body text-center p-4">
                         <i class="fas fa-utensils fa-3x text-success mb-3 position-absolute top-0 end-0 p-3 bg-white rounded-circle shadow"></i>
-                        <h5 class="card-title fw-bold">All Foods</h5>
-                        <p class="card-text">Save on your favorite dishes from biryani to desserts 🍜</p>
-                        <a href="/PriceCompare" class="btn btn-outline-success btn-sm">Explore All</a>
+                        <h5 class="card-title fw-bold">Real-Time Data</h5>
+                        <p class="card-text">Up-to-date prices from trusted delivery platforms</p>
+                        <a asp-controller="Comparison" asp-action="Index" class="btn btn-outline-success btn-sm">Compare Now</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
-
-
-
-
-
-<!-- Enhanced Styles (Updated for Footer Full-Screen) -->
-<style>
-    .bg-gradient {
-        background: linear-gradient(45deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
-    }
-
-    .food-card {
-        transition: all 0.4s ease;
-        border-radius: 20px;
-        overflow: hidden;
-    }
-
-        .food-card:hover {
-            transform: translateY(-15px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15) !important;
-        }
-
-        .food-card img {
-            border-radius: 20px 20px 0 0;
-            height: 250px;
-            object-fit: cover;
-        }
-
-    .social-icon:hover {
-        color: #ff9500 !important;
-        transform: scale(1.2);
-        transition: all 0.3s ease;
-    }
-
-
-    .animate-fade-in {
-        animation: fadeIn 1s ease-in;
-    }
-
-    @@keyframes fadeIn {
-        from {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    /* Mobile Responsiveness */
-    @@media (max-width: 768px) {
-        .hero-section h1 {
-            font-size: 2.5rem;
-        }
-
-        .hero-section p {
-            font-size: 1.2rem;
-        }
-
-        .btn-lg {
-            width: 100%;
-            margin-bottom: 10px;
-        }
-
-        .food-card img {
-            height: 200px;
-        }
-
-        footer .row > div {
-            text-align: center;
-            margin-bottom: 1.5rem;
-            padding: 0 1.5rem;
-        }
-        /* Touch-friendly on mobile */
-    }
-
-    /* Footer-Specific Styles (Full-Screen Like Header) */
-    footer a:hover {
-        color: #ff9500 !important; /* Matches new orange banner on hover */
-    }
-
-    footer .container-fluid {
-        padding: 0; /* Zero padding for true full-screen edge-to-edge */
-    }
-
-    /* Ensure no body margins interfere */
-    body {
-        margin: 0;
-        padding: 0;
-    }
-</style>                           

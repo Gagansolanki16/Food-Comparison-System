@@ -50,13 +50,13 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "dependencies": {
-            "BCrypt.Net-Next": {
-              "target": "Package",
-              "version": "[4.0.3, )"
-            },
             "HtmlAgilityPack": {
               "target": "Package",
-              "version": "[1.12.3, )"
+              "version": "[1.12.4, )"
+            },
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[9.0.9, )"
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
@@ -78,9 +78,25 @@
               "target": "Package",
               "version": "[9.0.9, )"
             },
+            "Microsoft.Extensions.Hosting": {
+              "target": "Package",
+              "version": "[9.0.10, )"
+            },
             "Microsoft.Playwright": {
               "target": "Package",
               "version": "[1.55.0, )"
+            },
+            "OpenAI": {
+              "target": "Package",
+              "version": "[2.6.0, )"
+            },
+            "Selenium.WebDriver": {
+              "target": "Package",
+              "version": "[4.38.0, )"
+            },
+            "Selenium.WebDriver.ChromeDriver": {
+              "target": "Package",
+              "version": "[142.0.7444.5900, )"
             }
           },
           "imports": [

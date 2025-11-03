@@ -1,0 +1,98 @@
+﻿@model FoodPriceComparison.Models.PriceComparison
+
+@{
+    ViewData["Title"] = "Compare Food Prices";
+}
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow p-4">
+                <h1 class="text-center mb-4"><i class="bi bi-bar-chart-line"></i> Compare Food Prices</h1>
+
+                <form asp-action="Index" method="get" class="mb-4">
+                    <!-- Restaurant Dropdown -->
+                    <div class="mb-3">
+                        <label for="selectedRestaurant" class="form-label">Select Restaurant (Vadodara)</label>
+                        <select name="selectedRestaurant" id="selectedRestaurant" class="form-select">
+                            <option value="">All Restaurants</option>
+                            @if (ViewBag.Restaurants != null)
+                            {
+                                foreach (var restaurant in ViewBag.Restaurants)
+                                {
+                                    <option value="@restaurant" selected="@(Context.Request.Query["selectedRestaurant"] == restaurant.ToString() ? "selected" : null)">@restaurant</option>
+                                }
+                            }
+                        </select>
+                    </div>
+
+                    <!-- Food Item Search -->
+                    <div class="input-group input-group-lg">
+                        <input type="text" name="foodItem" class="form-control" placeholder="Enter food item (e.g., Pizza)" value="@Model.FoodName" aria-label="Search food item" />
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-search"></i> Search
+                        </button>
+                    </div>
+                </form>
+
+                @if (Model.Items != null && Model.Items.Any())
+                {
+                    <div class="alert alert-success mt-4">
+                        <h5>Results for "@Model.FoodName"@(string.IsNullOrEmpty(Context.Request.Query["selectedRestaurant"]) ? "" : $" at {Context.Request.Query["selectedRestaurant"]}")</h5>
+                        <p><strong>Lowest Price:</strong> <span class="text-success fw-bold">₹@Model.LowestPrice</span> at <span class="fw-bold">@Model.BestSite</span></p>
+                        <small class="text-muted">Data from our database (Vadodara focus). Click "Order" to visit the restaurant page.</small>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-hover table-striped">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th><i class="bi bi-tag"></i> Name</th>
+                                    <th><i class="bi bi-cash"></i> Price</th>
+                                    <th><i class="bi bi-shop"></i> Restaurant</th>
+                                    <th><i class="bi bi-globe"></i> Site</th>
+                                    <th><i class="bi bi-link"></i> Order</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Items.OrderBy(i => i.Price))
+                                {
+                                    <tr class="@(item.DeliverySite == Model.BestSite ? "table-success" : "")">
+                                        <td>@item.Name</td>
+                                        <td class="fw-bold">₹@item.Price</td>
+                                        <td>@item.Restaurant</td>
+                                        <td>@item.DeliverySite</td>
+                                        <td>
+                                            <a href="@GetRestaurantUrl(item.DeliverySite, item.Restaurant)" target="_blank" class="btn btn-sm btn-outline-primary">
+                                                <i class="bi bi-arrow-up-right-circle"></i> Order
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+                else if (!string.IsNullOrEmpty(Model.FoodName))
+                {
+                    <div class="alert alert-warning mt-4">
+                        <i class="bi bi-exclamation-triangle"></i> No items found for "@Model.FoodName"@(string.IsNullOrEmpty(Context.Request.Query["selectedRestaurant"]) ? "" : $" at {Context.Request.Query["selectedRestaurant"]}")". Try a different search or restaurant.
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@{
+    string GetRestaurantUrl(string site, string restaurant)
+    {
+        var query = Uri.EscapeDataString(restaurant);
+        return site switch
+        {
+            "Swiggy" => $"https://www.swiggy.com/city/vadodara?q={query}",
+            "Zomato" => $"https://www.zomato.com/vadodara/restaurants?q={query}",
+            _ => "#"
+        };
+    }
+}

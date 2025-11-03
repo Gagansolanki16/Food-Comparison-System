@@ -1,77 +1,157 @@
-﻿using BCrypt.Net;
-using FoodPriceComparison.Models;
-using FoodPriceComparison.Data;
+﻿using FoodPriceComparison.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FoodPriceComparison.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly ApplicationDbContext _context;
-        public AccountController(ApplicationDbContext context)
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<IdentityUser> _signInManager;
+
+        public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
         {
-            _context = context;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
-        // GET: Signup
-        public IActionResult Signup()
+        // GET: /Account/Login
+        [HttpGet]
+        public IActionResult Login(string returnUrl = null)
+        {
+            ViewData["ReturnUrl"] = returnUrl;
+            return View();
+        }
+
+        // POST: /Account/Login
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, false);
+                if (result.Succeeded)
+                {
+                    return RedirectToLocal(returnUrl);
+                }
+                ModelState.AddModelError("", "Invalid login attempt.");
+            }
+            return View(model);
+        }
+
+        // GET: /Account/Register
+        [HttpGet]
+        public IActionResult Register()
         {
             return View();
         }
 
-        // POST: Signup
+        // POST: /Account/Register
         [HttpPost]
-        public async Task<IActionResult> Signup(User user, string password)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register(RegisterViewModel model)
         {
-            if (user == null || string.IsNullOrEmpty(password) ||
-                string.IsNullOrEmpty(user.Username) || string.IsNullOrEmpty(user.Email))
+            if (ModelState.IsValid)
             {
-                TempData["Error"] = "Please fill all fields!";
-                return View(user);
+                var user = new IdentityUser { UserName = model.Email, Email = model.Email };
+                var result = await _userManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    return RedirectToAction("Index", "Home");
+                }
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
             }
+            return View(model);
+        }
 
-            if (_context.Users.Any(u => u.Email == user.Email))
-            {
-                TempData["Error"] = "Email already registered!";
-                return View(user);
-            }
-
-            user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(password);
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
-
-            TempData["Success"] = "Signup successful! Please login.";
+        // POST: /Account/Logout
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
             return RedirectToAction("Login");
         }
 
-        // GET: Login
-        public IActionResult Login()
+        // GET: /Account/Profile
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> Profile()
         {
-            return View();
-        }
-
-        // POST: Login
-        [HttpPost]
-        public IActionResult Login(string email, string password)
-        {
-            var user = _context.Users.FirstOrDefault(u => u.Email == email);
-            if (user != null && BCrypt.Net.BCrypt.Verify(password, user.PasswordHash))
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
             {
-                HttpContext.Session.SetString("Username", user.Username);
-                HttpContext.Session.SetString("Email", user.Email);
-                return RedirectToAction("Index", "Home");
+                return NotFound();
             }
 
-            TempData["Error"] = "Invalid email or password.";
-            return View();
+            var model = new ProfileViewModel
+            {
+                Email = user.Email
+            };
+
+            return View(model);
         }
 
-        // Logout
-        public IActionResult Logout()
+        // POST: /Account/Profile
+        [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Profile(ProfileViewModel model)
         {
-            HttpContext.Session.Clear();
-            TempData["Success"] = "Logged out successfully!";
-            return RedirectToAction("Login");
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            if (model.Email != user.Email)
+            {
+                var setEmailResult = await _userManager.SetEmailAsync(user, model.Email);
+                if (!setEmailResult.Succeeded)
+                {
+                    foreach (var error in setEmailResult.Errors)
+                    {
+                        ModelState.AddModelError("", error.Description);
+                    }
+                    return View(model);
+                }
+            }
+
+            if (!string.IsNullOrEmpty(model.NewPassword))
+            {
+                var changePasswordResult = await _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
+                if (!changePasswordResult.Succeeded)
+                {
+                    foreach (var error in changePasswordResult.Errors)
+                    {
+                        ModelState.AddModelError("", error.Description);
+                    }
+                    return View(model);
+                }
+            }
+
+            TempData["Success"] = "Profile updated successfully.";
+            return RedirectToAction("Profile");
+        }
+
+        private IActionResult RedirectToLocal(string returnUrl)
+        {
+            if (Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
+            return RedirectToAction("Index", "Home");
         }
     }
 }
