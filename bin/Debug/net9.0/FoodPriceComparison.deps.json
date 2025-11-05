@@ -8,17 +8,12 @@
     ".NETCoreApp,Version=v9.0": {
       "FoodPriceComparison/1.0.0": {
         "dependencies": {
-          "HtmlAgilityPack": "1.12.4",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "9.0.9",
           "Microsoft.EntityFrameworkCore": "9.0.9",
           "Microsoft.EntityFrameworkCore.Design": "9.0.9",
           "Microsoft.EntityFrameworkCore.SqlServer": "9.0.9",
           "Microsoft.EntityFrameworkCore.Tools": "9.0.9",
-          "Microsoft.Extensions.Hosting": "9.0.10",
-          "Microsoft.Playwright": "1.55.0",
-          "OpenAI": "2.6.0",
-          "Selenium.WebDriver": "4.38.0",
-          "Selenium.WebDriver.ChromeDriver": "142.0.7444.5900"
+          "Microsoft.Extensions.Hosting": "9.0.10"
         },
         "runtime": {
           "FoodPriceComparison.dll": {}
@@ -27,9 +22,9 @@
       "Azure.Core/1.38.0": {
         "dependencies": {
           "Microsoft.Bcl.AsyncInterfaces": "7.0.0",
-          "System.ClientModel": "1.7.0",
+          "System.ClientModel": "1.0.0",
           "System.Diagnostics.DiagnosticSource": "6.0.1",
-          "System.Memory.Data": "8.0.1",
+          "System.Memory.Data": "1.0.2",
           "System.Numerics.Vectors": "4.5.0",
           "System.Text.Encodings.Web": "6.0.0",
           "System.Text.Json": "9.0.9",
@@ -56,14 +51,6 @@
           "lib/netstandard2.0/Azure.Identity.dll": {
             "assemblyVersion": "1.11.4.0",
             "fileVersion": "1.1100.424.31005"
-          }
-        }
-      },
-      "HtmlAgilityPack/1.12.4": {
-        "runtime": {
-          "lib/net7.0/HtmlAgilityPack.dll": {
-            "assemblyVersion": "1.12.4.0",
-            "fileVersion": "1.12.4.0"
           }
         }
       },
@@ -1061,19 +1048,6 @@
       },
       "Microsoft.NETCore.Platforms/1.1.0": {},
       "Microsoft.NETCore.Targets/1.1.0": {},
-      "Microsoft.Playwright/1.55.0": {
-        "dependencies": {
-          "Microsoft.Bcl.AsyncInterfaces": "7.0.0",
-          "System.ComponentModel.Annotations": "5.0.0",
-          "System.Text.Json": "9.0.9"
-        },
-        "runtime": {
-          "lib/netstandard2.0/Microsoft.Playwright.dll": {
-            "assemblyVersion": "1.55.0.0",
-            "fileVersion": "1.55.0.0"
-          }
-        }
-      },
       "Microsoft.SqlServer.Server/1.0.0": {
         "runtime": {
           "lib/netstandard2.0/Microsoft.SqlServer.Server.dll": {
@@ -1109,53 +1083,15 @@
           }
         }
       },
-      "OpenAI/2.6.0": {
+      "System.ClientModel/1.0.0": {
         "dependencies": {
-          "System.ClientModel": "1.7.0",
-          "System.Net.ServerSentEvents": "9.0.9"
+          "System.Memory.Data": "1.0.2",
+          "System.Text.Json": "9.0.9"
         },
         "runtime": {
-          "lib/net8.0/OpenAI.dll": {
-            "assemblyVersion": "2.6.0.0",
-            "fileVersion": "2.6.0.0"
-          }
-        }
-      },
-      "Selenium.WebDriver/4.38.0": {
-        "runtime": {
-          "lib/net8.0/WebDriver.dll": {
-            "assemblyVersion": "4.0.0.0",
-            "fileVersion": "4.0.0.0"
-          }
-        },
-        "runtimeTargets": {
-          "runtimes/linux/native/selenium-manager": {
-            "rid": "linux",
-            "assetType": "native",
-            "fileVersion": "0.0.0.0"
-          },
-          "runtimes/osx/native/selenium-manager": {
-            "rid": "osx",
-            "assetType": "native",
-            "fileVersion": "0.0.0.0"
-          },
-          "runtimes/win/native/selenium-manager.exe": {
-            "rid": "win",
-            "assetType": "native",
-            "fileVersion": "0.0.0.0"
-          }
-        }
-      },
-      "Selenium.WebDriver.ChromeDriver/142.0.7444.5900": {},
-      "System.ClientModel/1.7.0": {
-        "dependencies": {
-          "Microsoft.Extensions.Logging.Abstractions": "9.0.10",
-          "System.Memory.Data": "8.0.1"
-        },
-        "runtime": {
-          "lib/net9.0/System.ClientModel.dll": {
-            "assemblyVersion": "1.7.0.0",
-            "fileVersion": "1.700.25.47207"
+          "lib/net6.0/System.ClientModel.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.24.5302"
           }
         }
       },
@@ -1168,7 +1104,6 @@
         }
       },
       "System.Collections.Immutable/7.0.0": {},
-      "System.ComponentModel.Annotations/5.0.0": {},
       "System.Composition/7.0.0": {
         "dependencies": {
           "System.Composition.AttributedModel": "7.0.0",
@@ -1309,19 +1244,15 @@
       },
       "System.IO.Pipelines/7.0.0": {},
       "System.Memory/4.5.4": {},
-      "System.Memory.Data/8.0.1": {
+      "System.Memory.Data/1.0.2": {
+        "dependencies": {
+          "System.Text.Encodings.Web": "6.0.0",
+          "System.Text.Json": "9.0.9"
+        },
         "runtime": {
-          "lib/net8.0/System.Memory.Data.dll": {
-            "assemblyVersion": "8.0.0.1",
-            "fileVersion": "8.0.1024.46610"
-          }
-        }
-      },
-      "System.Net.ServerSentEvents/9.0.9": {
-        "runtime": {
-          "lib/net9.0/System.Net.ServerSentEvents.dll": {
-            "assemblyVersion": "9.0.0.9",
-            "fileVersion": "9.0.925.41916"
+          "lib/netstandard2.0/System.Memory.Data.dll": {
+            "assemblyVersion": "1.0.2.0",
+            "fileVersion": "1.0.221.20802"
           }
         }
       },
@@ -1459,13 +1390,6 @@
       "sha512": "sha512-Sf4BoE6Q3jTgFkgBkx7qztYOFELBCo+wQgpYDwal/qJ1unBH73ywPztIJKXBXORRzAeNijsuxhk94h0TIMvfYg==",
       "path": "azure.identity/1.11.4",
       "hashPath": "azure.identity.1.11.4.nupkg.sha512"
-    },
-    "HtmlAgilityPack/1.12.4": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-ljqvBabvFwKoLniuoQKO8b5bJfJweKLs4fUNS/V5dsvpo0A8MlJqxxn9XVmP2DaskbUXty6IYaWAi1SArGIMeQ==",
-      "path": "htmlagilitypack/1.12.4",
-      "hashPath": "htmlagilitypack.1.12.4.nupkg.sha512"
     },
     "Humanizer.Core/2.14.1": {
       "type": "package",
@@ -1922,13 +1846,6 @@
       "path": "microsoft.netcore.targets/1.1.0",
       "hashPath": "microsoft.netcore.targets.1.1.0.nupkg.sha512"
     },
-    "Microsoft.Playwright/1.55.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-iPVHeRI5EZB1gK43MC/qnINvGUV3pYh/PJn5wNmeaiZ4ARlFAfK3azf46c7/kx/lmVaknZ5rSNT1F8SZgSaWSQ==",
-      "path": "microsoft.playwright/1.55.0",
-      "hashPath": "microsoft.playwright.1.55.0.nupkg.sha512"
-    },
     "Microsoft.SqlServer.Server/1.0.0": {
       "type": "package",
       "serviceable": true,
@@ -1950,33 +1867,12 @@
       "path": "mono.texttemplating/3.0.0",
       "hashPath": "mono.texttemplating.3.0.0.nupkg.sha512"
     },
-    "OpenAI/2.6.0": {
+    "System.ClientModel/1.0.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-5hUnDrcAREi+UMnwzGEKKG6KHC+FUPcATPL0U3mz84F9wEa1E4EfCuZtv0poccvtRqYrUoie9l29I4GW6q5J0g==",
-      "path": "openai/2.6.0",
-      "hashPath": "openai.2.6.0.nupkg.sha512"
-    },
-    "Selenium.WebDriver/4.38.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-3cYBndxLgPifEttQ1+k+KhKp2XBTdME3pUp4PC/eHb/hvHsefeT2WN2JJymzs+5mkqaXUp64FBnj2EG/Iyrh/A==",
-      "path": "selenium.webdriver/4.38.0",
-      "hashPath": "selenium.webdriver.4.38.0.nupkg.sha512"
-    },
-    "Selenium.WebDriver.ChromeDriver/142.0.7444.5900": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-sT/igDrKe5mvfgoZF63gpwAIIz/YPewLvrfi5KgpusmsXz2X9E17R+OSZIffYYgRQJ5o9MUhKSu6BgbHRHRDPQ==",
-      "path": "selenium.webdriver.chromedriver/142.0.7444.5900",
-      "hashPath": "selenium.webdriver.chromedriver.142.0.7444.5900.nupkg.sha512"
-    },
-    "System.ClientModel/1.7.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-NKKA3/O6B7PxmtIzOifExHdfoWthy3AD4EZ1JfzcZU8yGZTbYrK1qvXsHUL/1yQKKqWSKgIR1Ih/yf2gOaHc4w==",
-      "path": "system.clientmodel/1.7.0",
-      "hashPath": "system.clientmodel.1.7.0.nupkg.sha512"
+      "sha512": "sha512-I3CVkvxeqFYjIVEP59DnjbeoGNfo/+SZrCLpRz2v/g0gpCHaEMPtWSY0s9k/7jR1rAsLNg2z2u1JRB76tPjnIw==",
+      "path": "system.clientmodel/1.0.0",
+      "hashPath": "system.clientmodel.1.0.0.nupkg.sha512"
     },
     "System.CodeDom/6.0.0": {
       "type": "package",
@@ -1991,13 +1887,6 @@
       "sha512": "sha512-dQPcs0U1IKnBdRDBkrCTi1FoajSTBzLcVTpjO4MBCMC7f4pDOIPzgBoX8JjG7X6uZRJ8EBxsi8+DR1JuwjnzOQ==",
       "path": "system.collections.immutable/7.0.0",
       "hashPath": "system.collections.immutable.7.0.0.nupkg.sha512"
-    },
-    "System.ComponentModel.Annotations/5.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-dMkqfy2el8A8/I76n2Hi1oBFEbG1SfxD2l5nhwXV3XjlnOmwxJlQbYpJH4W51odnU9sARCSAgv7S3CyAFMkpYg==",
-      "path": "system.componentmodel.annotations/5.0.0",
-      "hashPath": "system.componentmodel.annotations.5.0.0.nupkg.sha512"
     },
     "System.Composition/7.0.0": {
       "type": "package",
@@ -2097,19 +1986,12 @@
       "path": "system.memory/4.5.4",
       "hashPath": "system.memory.4.5.4.nupkg.sha512"
     },
-    "System.Memory.Data/8.0.1": {
+    "System.Memory.Data/1.0.2": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-BVYuec3jV23EMRDeR7Dr1/qhx7369dZzJ9IWy2xylvb4YfXsrUxspWc4UWYid/tj4zZK58uGZqn2WQiaDMhmAg==",
-      "path": "system.memory.data/8.0.1",
-      "hashPath": "system.memory.data.8.0.1.nupkg.sha512"
-    },
-    "System.Net.ServerSentEvents/9.0.9": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-zEISfefh8BYD5m+GMsYJnodiTaz2fDBEOrLgYH7VsQhMIzNkcuSsg9Df/d3zywYX5ohCyCJ5AOax50XLKnXyjw==",
-      "path": "system.net.serversentevents/9.0.9",
-      "hashPath": "system.net.serversentevents.9.0.9.nupkg.sha512"
+      "sha512": "sha512-JGkzeqgBsiZwKJZ1IxPNsDFZDhUvuEdX8L8BDC8N3KOj+6zMcNU28CNN59TpZE/VJYy9cP+5M+sbxtWJx3/xtw==",
+      "path": "system.memory.data/1.0.2",
+      "hashPath": "system.memory.data.1.0.2.nupkg.sha512"
     },
     "System.Numerics.Vectors/4.5.0": {
       "type": "package",

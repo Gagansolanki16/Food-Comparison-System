@@ -1,1 +1,28 @@
-[]
+[
+  {
+    "ContainingType": "FoodPriceComparison.Controllers.PriceApiController",
+    "Method": "FetchPrices",
+    "RelativePath": "api/PriceApi/fetch/{foodItem}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "foodItem",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FoodPriceComparison.Controllers.PriceApiController",
+    "Method": "GetRestaurants",
+    "RelativePath": "api/PriceApi/restaurants",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  }
+]
