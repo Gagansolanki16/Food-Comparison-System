@@ -72,7 +72,7 @@
                                                 <td>@item.Restaurant</td>
                                                 <td>@item.DeliverySite</td>
                                                 <td>
-                                                    <a href="@GetRestaurantUrl(item.DeliverySite, item.Restaurant)" target="_blank" class="btn btn-sm btn-outline-primary hover-glow">
+                                                    <a href="@(string.IsNullOrEmpty(item.RestaurantUrl) ? GetRestaurantUrl(item.DeliverySite, item.Restaurant) : item.RestaurantUrl)" target="_blank" class="btn btn-sm btn-outline-primary hover-glow">
                                                         <i class="bi bi-arrow-up-right-circle"></i> Order
                                                     </a>
                                                 </td>

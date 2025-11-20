@@ -25,5 +25,7 @@ namespace FoodPriceComparison.Models
 
         [JsonPropertyName("lastUpdated")]
         public DateTime LastUpdated { get; set; }
+
+        public string RestaurantUrl { get; set; }
     }
 }
