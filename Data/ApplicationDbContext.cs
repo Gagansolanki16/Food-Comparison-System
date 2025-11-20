@@ -12,5 +12,8 @@ namespace FoodPriceComparison.Data
         }
 
         public DbSet<FoodItem> FoodItems { get; set; }
+        public DbSet<Review> Reviews { get; set; }
+        public DbSet<Favorite> Favorites { get; set; }
+        public DbSet<SearchHistory> SearchHistories { get; set; }
     }
 }

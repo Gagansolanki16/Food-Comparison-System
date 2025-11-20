@@ -4,44 +4,64 @@
     ViewData["Title"] = "Manage Profile";
 }
 
-<div class="container my-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card shadow">
-                <div class="card-header bg-info text-white text-center">
-                    <h3><i class="bi bi-person-gear"></i> Manage Your Profile</h3>
-                </div>
-                <div class="card-body">
-                    @if (TempData["Success"] != null)
-                    {
-                        <div class="alert alert-success">@TempData["Success"]</div>
-                    }
-                    <form asp-action="Profile" method="post">
-                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <div class="mb-3">
-                            <label asp-for="Email" class="form-label"></label>
-                            <input asp-for="Email" class="form-control" />
-                            <span asp-validation-for="Email" class="text-danger"></span>
-                        </div>
-                        <hr />
-                        <h5>Change Password (Optional)</h5>
-                        <div class="mb-3">
-                            <label asp-for="CurrentPassword" class="form-label"></label>
-                            <input asp-for="CurrentPassword" class="form-control" />
-                            <span asp-validation-for="CurrentPassword" class="text-danger"></span>
-                        </div>
-                        <div class="mb-3">
-                            <label asp-for="NewPassword" class="form-label"></label>
-                            <input asp-for="NewPassword" class="form-control" />
-                            <span asp-validation-for="NewPassword" class="text-danger"></span>
-                        </div>
-                        <div class="mb-3">
-                            <label asp-for="ConfirmNewPassword" class="form-label"></label>
-                            <input asp-for="ConfirmNewPassword" class="form-control" />
-                            <span asp-validation-for="ConfirmNewPassword" class="text-danger"></span>
-                        </div>
-                        <button type="submit" class="btn btn-info w-100">Update Profile</button>
-                    </form>
+<div class="auth-bg auth-bg-profile">
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow-lg border-0 auth-card" data-aos="fade-in" data-aos-duration="800">
+                    <div class="card-header bg-info text-white text-center py-4">
+                        <i class="bi bi-person-gear fa-2x mb-2 animate-bounce"></i>
+                        <h3 class="fw-bold">Manage Your Profile</h3>
+                        <p class="mb-0">Update your account details</p>
+                    </div>
+                    <div class="card-body p-5">
+                        @if (TempData["Success"] != null)
+                        {
+                            <div class="alert alert-success animate-highlight" data-aos="slide-down">@TempData["Success"]</div>
+                        }
+                        <form asp-action="Profile" method="post" class="auth-form">
+                            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                            <div class="row">
+                                <div class="col-md-6 mb-4">
+                                    <label asp-for="Email" class="form-label fw-bold"></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                                        <input asp-for="Email" class="form-control form-control-lg hover-glow" placeholder="Update your email" />
+                                    </div>
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <label asp-for="CurrentPassword" class="form-label fw-bold"></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                                        <input asp-for="CurrentPassword" class="form-control form-control-lg hover-glow" placeholder="Current password" />
+                                    </div>
+                                    <span asp-validation-for="CurrentPassword" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-4">
+                                    <label asp-for="NewPassword" class="form-label fw-bold"></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+                                        <input asp-for="NewPassword" class="form-control form-control-lg hover-glow" placeholder="New password" />
+                                    </div>
+                                    <span asp-validation-for="NewPassword" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <label asp-for="ConfirmNewPassword" class="form-label fw-bold"></label>
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+                                        <input asp-for="ConfirmNewPassword" class="form-control form-control-lg hover-glow" placeholder="Confirm new password" />
+                                    </div>
+                                    <span asp-validation-for="ConfirmNewPassword" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-info btn-lg w-100 hover-lift animate-pulse">
+                                <i class="bi bi-save"></i> Update Profile
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

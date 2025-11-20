@@ -1,6 +1,7 @@
 ﻿using FoodPriceComparison.Data;
 using FoodPriceComparison.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -15,99 +16,156 @@ namespace FoodPriceComparison.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly HttpClient _httpClient;
-        private readonly JsonSerializerOptions _jsonOptions;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public ComparisonController(ApplicationDbContext context, IConfiguration configuration)
+        public ComparisonController(ApplicationDbContext context, IConfiguration configuration, UserManager<IdentityUser> userManager)
         {
             _context = context;
             var port = configuration["ASPNETCORE_HTTPS_PORT"] ?? "5001";
             _httpClient = new HttpClient { BaseAddress = new Uri($"https://localhost:{port}") };
-            _jsonOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            _userManager = userManager;
         }
 
         public async Task<IActionResult> Index(string foodItem, string selectedRestaurant)
         {
-            // Fetch restaurants from API
+            var user = await _userManager.GetUserAsync(User);
+            var userId = user?.Id;
+            var favorites = userId != null ? await _context.Favorites.Where(f => f.UserId == userId).ToListAsync() : new List<Favorite>();
+
+            // Fetch restaurants
             var restaurantResponse = await _httpClient.GetAsync("api/priceapi/restaurants");
             var restaurants = new List<string>();
             if (restaurantResponse.IsSuccessStatusCode)
             {
-                restaurants = await JsonSerializer.DeserializeAsync<List<string>>(await restaurantResponse.Content.ReadAsStreamAsync(), _jsonOptions);
-                Console.WriteLine($"Fetched {restaurants.Count} restaurants from API");
+                restaurants = await JsonSerializer.DeserializeAsync<List<string>>(await restaurantResponse.Content.ReadAsStreamAsync(), new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
             }
             ViewBag.Restaurants = restaurants ?? new List<string>();
 
             if (!string.IsNullOrEmpty(foodItem))
             {
-                Console.WriteLine($"Searching for: {foodItem}");
+                // Track search history
+                if (userId != null)
+                {
+                    var history = new SearchHistory
+                    {
+                        UserId = userId,
+                        SearchTerm = foodItem,
+                        SelectedRestaurant = selectedRestaurant
+                    };
+                    _context.SearchHistories.Add(history);
+                    await _context.SaveChangesAsync();
+                }
 
-                // Fetch prices from API
+                // Fetch prices
                 var apiResponse = await _httpClient.GetAsync($"api/priceapi/fetch/{foodItem}");
                 var apiItems = new List<FoodItem>();
                 if (apiResponse.IsSuccessStatusCode)
                 {
-                    apiItems = await JsonSerializer.DeserializeAsync<List<FoodItem>>(await apiResponse.Content.ReadAsStreamAsync(), _jsonOptions);
-                    Console.WriteLine($"Fetched {apiItems.Count} items from API for {foodItem}");
-                }
-                else
-                {
-                    Console.WriteLine($"API call failed for {foodItem}: {apiResponse.StatusCode}");
+                    apiItems = await JsonSerializer.DeserializeAsync<List<FoodItem>>(await apiResponse.Content.ReadAsStreamAsync(), new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
                 }
 
                 // Save to DB
-                int savedCount = 0;
                 foreach (var item in apiItems)
                 {
-                    Console.WriteLine($"Processing item: Name='{item?.Name}', Restaurant='{item?.Restaurant}', DeliverySite='{item?.DeliverySite}', Price={item?.Price}");
-
                     if (string.IsNullOrWhiteSpace(item?.Name) || string.IsNullOrWhiteSpace(item?.Restaurant) || string.IsNullOrWhiteSpace(item?.DeliverySite))
-                    {
-                        Console.WriteLine($"Skipping item due to null/empty fields");
                         continue;
-                    }
-
-                    if (item?.Price <= 0)
-                    {
-                        Console.WriteLine($"Skipping item due to invalid price: {item?.Price}");
-                        continue;
-                    }
+                    if (item?.Price <= 0) continue;
 
                     var existing = await _context.FoodItems.FirstOrDefaultAsync(f => f.Name == item.Name && f.Restaurant == item.Restaurant && f.DeliverySite == item.DeliverySite);
                     if (existing != null)
                     {
                         existing.Price = item.Price;
                         existing.LastUpdated = item.LastUpdated;
-                        Console.WriteLine($"Updated {item.Name}");
                     }
                     else
                     {
                         _context.FoodItems.Add(item);
-                        Console.WriteLine($"Added {item.Name}");
                     }
-                    savedCount++;
                 }
                 await _context.SaveChangesAsync();
-                Console.WriteLine($"Saved {savedCount} items to DB");
 
-                // Query DB for display
+                // Query DB
                 var query = _context.FoodItems.Where(f => f.Name.Contains(foodItem));
                 if (!string.IsNullOrEmpty(selectedRestaurant))
                 {
                     query = query.Where(f => f.Restaurant == selectedRestaurant);
                 }
                 var items = await query.ToListAsync();
-                Console.WriteLine($"Found {items.Count} items in DB for {foodItem}");
+
+                // Fetch reviews for restaurants in results
+                var restaurantNames = items.Select(i => i.Restaurant).Distinct().ToList();
+                var reviews = await _context.Reviews.Where(r => restaurantNames.Contains(r.Restaurant)).ToListAsync();
 
                 var comparison = new PriceComparison
                 {
                     FoodName = foodItem,
-                    Items = items
+                    Items = items,
+                    Reviews = reviews,
+                    Favorites = favorites
                 };
 
                 return View(comparison);
             }
 
             return View(new PriceComparison());
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddReview(string restaurant, string reviewText, int rating)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null) return Unauthorized();
+
+            var review = new Review
+            {
+                UserId = user.Id,
+                Restaurant = restaurant,
+                ReviewText = reviewText,
+                Rating = rating
+            };
+            _context.Reviews.Add(review);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddFavorite(string itemName, string restaurant)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null) return Unauthorized();
+            var existing = await _context.Favorites.FirstOrDefaultAsync(f => f.UserId == user.Id && f.ItemName == itemName && f.Restaurant == restaurant);
+            if (existing == null)
+            {
+                var favorite = new Favorite
+                {
+                    UserId = user.Id,
+                    ItemName = itemName,
+                    Restaurant = restaurant
+                };
+                _context.Favorites.Add(favorite);
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToAction("Index");
+        }
+
+
+        public async Task<IActionResult> Favorites()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null) return Unauthorized();
+
+            var favorites = await _context.Favorites.Where(f => f.UserId == user.Id).ToListAsync();
+            return View(favorites);
+        }
+
+        public async Task<IActionResult> SearchHistory()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null) return Unauthorized();
+
+            var history = await _context.SearchHistories.Where(h => h.UserId == user.Id).OrderByDescending(h => h.SearchedAt).ToListAsync();
+            return View(history);
         }
     }
 }

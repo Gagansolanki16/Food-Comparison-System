@@ -4,35 +4,50 @@
     ViewData["Title"] = "Register";
 }
 
-<div class="container my-5">
-    <div class="row justify-content-center">
-        <div class="col-md-4">
-            <!-- Changed to col-md-4 for narrower width -->
-            <div class="card shadow" style="min-height: 450px;">
-                <div class="card-header bg-success text-white text-center">
-                    <h3><i class="bi bi-person-plus"></i> Register</h3>
-                </div>
-                <div class="card-body d-flex flex-column justify-content-center">
-                    <form asp-action="Register" method="post">
-                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <div class="mb-3">
-                            <label asp-for="Email" class="form-label"></label>
-                            <input asp-for="Email" class="form-control" />
-                            <span asp-validation-for="Email" class="text-danger"></span>
-                        </div>
-                        <div class="mb-3">
-                            <label asp-for="Password" class="form-label"></label>
-                            <input asp-for="Password" class="form-control" />
-                            <span asp-validation-for="Password" class="text-danger"></span>
-                        </div>
-                        <div class="mb-3">
-                            <label asp-for="ConfirmPassword" class="form-label"></label>
-                            <input asp-for="ConfirmPassword" class="form-control" />
-                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-                        </div>
-                        <button type="submit" class="btn btn-success w-100">Register</button>
-                    </form>
-                    <p class="mt-3 text-center">Already have an account? <a asp-action="Login">Login here</a></p>
+<div class="auth-bg auth-bg-register">
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow-lg border-0 auth-card" data-aos="zoom-in" data-aos-duration="800">
+                    <div class="card-header bg-success text-white text-center py-4">
+                        <i class="bi bi-person-plus fa-2x mb-2 animate-bounce"></i>
+                        <h3 class="fw-bold">Join Us</h3>
+                        <p class="mb-0">Create your account</p>
+                    </div>
+                    <div class="card-body p-5">
+                        <form asp-action="Register" method="post" class="auth-form">
+                            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                            <div class="mb-4">
+                                <label asp-for="Email" class="form-label fw-bold"></label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                                    <input asp-for="Email" class="form-control form-control-lg hover-glow" placeholder="Enter your email" />
+                                </div>
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                            <div class="mb-4">
+                                <label asp-for="Password" class="form-label fw-bold"></label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                                    <input asp-for="Password" class="form-control form-control-lg hover-glow" placeholder="Create a password" />
+                                </div>
+                                <span asp-validation-for="Password" class="text-danger"></span>
+                            </div>
+                            <div class="mb-4">
+                                <label asp-for="ConfirmPassword" class="form-label fw-bold"></label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+                                    <input asp-for="ConfirmPassword" class="form-control form-control-lg hover-glow" placeholder="Confirm your password" />
+                                </div>
+                                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                            </div>
+                            <button type="submit" class="btn btn-success btn-lg w-100 hover-lift animate-pulse">
+                                <i class="bi bi-person-check"></i> Register
+                            </button>
+                        </form>
+                        <hr class="my-4">
+                        <p class="text-center">Already have an account? <a asp-action="Login" class="text-success fw-bold hover-glow">Login here</a></p>
+                    </div>
                 </div>
             </div>
         </div>

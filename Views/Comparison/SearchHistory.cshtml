@@ -1,0 +1,31 @@
+﻿@model IEnumerable<FoodPriceComparison.Models.SearchHistory>
+
+@{
+    ViewData["Title"] = "Search History";
+}
+
+<div class="container my-5" data-aos="fade-in">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow p-4" data-aos="zoom-in">
+                <h1 class="text-center mb-4"><i class="bi bi-clock-history"></i> Search History</h1>
+                @if (Model.Any())
+                {
+                    <ul class="list-group">
+                        @foreach (var hist in Model)
+                        {
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                "@hist.SearchTerm"@(string.IsNullOrEmpty(hist.SelectedRestaurant) ? "" : $" at {hist.SelectedRestaurant}")
+                                <small class="text-muted">@hist.SearchedAt.ToShortDateString()</small>
+                            </li>
+                        }
+                    </ul>
+                }
+                else
+                {
+                    <p class="text-center">No search history yet. Start searching!</p>
+                }
+            </div>
+        </div>
+    </div>
+</div>

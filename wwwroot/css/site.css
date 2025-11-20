@@ -61,3 +61,182 @@ body {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
   text-align: start;
 }
+
+/* Custom Animations */
+.animate-spin {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.animate-highlight {
+    animation: highlight 1s ease-in-out;
+}
+
+@keyframes highlight {
+    0% {
+        background-color: rgba(25, 135, 84, 0.1);
+    }
+
+    50% {
+        background-color: rgba(25, 135, 84, 0.3);
+    }
+
+    100% {
+        background-color: rgba(25, 135, 84, 0.1);
+    }
+}
+
+.hover-table tr:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    transition: background-color 0.3s ease;
+}
+
+/* Hero Background Animation */
+.hero {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background-size: 400% 400%;
+    animation: gradientShift 10s ease infinite;
+    color: white;
+    padding: 100px 0;
+}
+
+
+/* Auth Pages Background with Unique Food Images */
+.auth-bg-login {
+    background-image: url('https://plus.unsplash.com/premium_photo-1673108852141-e8c3c22a4a22?ixlib=rb-4.1.0&auto=format&fit=crop&w=1920&q=80');
+}
+
+.auth-bg-register {
+    background-image: url('https://plus.unsplash.com/premium_photo-1673108852141-e8c3c22a4a22?ixlib=rb-4.1.0&auto=format&fit=crop&w=1920&q=80');
+}
+
+.auth-bg-profile {
+    background-image: url('https://plus.unsplash.com/premium_photo-1682088887477-4f63f185ba7e?ixlib=rb-4.1.0&auto=format&fit=crop&w=1920&q=80');
+}
+
+.auth-bg {
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+    .auth-bg::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.4);
+        z-index: 1;
+    }
+
+.auth-card {
+    position: relative;
+    z-index: 2;
+    border-radius: 15px;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.95);
+}
+
+
+.hover-lift {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .hover-lift:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+.hover-glow {
+    transition: box-shadow 0.3s ease;
+}
+
+    .hover-glow:hover {
+        box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+    }
+
+.animate-pulse {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.animate-bounce {
+    animation: bounce 1s infinite;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+
+    40% {
+        transform: translateY(-10px);
+    }
+
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+.animate-highlight {
+    animation: highlight 1s ease-in-out;
+}
+
+@keyframes highlight {
+    0% {
+        background-color: rgba(25, 135, 84, 0.1);
+    }
+
+    50% {
+        background-color: rgba(25, 135, 84, 0.3);
+    }
+
+    100% {
+        background-color: rgba(25, 135, 84, 0.1);
+    }
+}
+
+.auth-form .form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    animation: focusGlow 0.5s ease;
+}
+
+@keyframes focusGlow {
+    0% {
+        box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.25);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+}
